@@ -1,0 +1,86 @@
+# Makefile for Guavac's manual page
+
+# Autoconf for Guavac by Joerg Heitkoetter <joke@Germany.EU.net>, 1996.
+# $Id: Makefile.in,v 1.5 1996/03/12 21:25:17 joke Rel $
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+PRODUCT = @PRODUCT@
+VERSION = @VERSION@
+
+SHELL = /bin/sh
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+TROFF = groff
+TROFFOPTS = -man
+
+prefix = @prefix@
+mandir = @mandir@
+
+DISTFILES = Makefile.in version.in $(PRODUCT).1 version.n stamp-vnr $(PRODUCT).man $(PRODUCT).ps
+
+all manpage: $(PRODUCT).man $(PRODUCT).ps
+
+$(PRODUCT).man: $(PRODUCT).1 version.n
+	cd $(srcdir) && $(TROFF) $(TROFFOPTS) -Tascii $(PRODUCT).1 >$(PRODUCT).man
+$(PRODUCT).ps: $(PRODUCT).1 version.n
+	cd $(srcdir) && $(TROFF) $(TROFFOPTS) -Tps $(PRODUCT).1 >$(PRODUCT).ps
+
+version.n: stamp-vnr
+stamp-vnr: $(PRODUCT).1
+	echo ".ds ED $(VERSION)" > version.tmp
+	echo ".ds UP `date '+%B %Y'`" >> version.tmp
+	echo ".ds VE $(VERSION)" >> version.tmp
+	if cmp -s version.tmp $(srcdir)/version.n; then rm version.tmp; \
+	else mv version.tmp $(srcdir)/version.n; fi
+	date > $<
+
+install: all
+	$(srcdir)/../mkinstalldirs $(mandir) $(mandir)/man1 $(mandir)/cat1
+	cd $(srcdir) && for file in $(PRODUCT).1; do \
+	  $(INSTALL_DATA) $$file $(mandir)/man1/$$file; \
+	done
+	cd $(srcdir) && for file in $(PRODUCT).man; do \
+	  $(INSTALL_DATA) $$file $(mandir)/cat1/$$file; \
+	done
+
+uninstall:
+	rm -f $(mandir)/man1/$(PRODUCT).1
+	rm -f $(mandir)/cat1/$(PRODUCT).man
+
+mostlyclean:
+	rm -f *.tmp
+
+clean: mostlyclean
+
+distclean: clean
+	rm -f Makefile
+
+realclean: distclean
+	rm -f stamp-vti $(PRODUCT).man $(PRODUCT).n $(PRODUCT).ps
+
+dist: $(DISTFILES)
+	@echo "Copying distribution files"
+	@for file in $(DISTFILES); do \
+	  ln $(srcdir)/$$file ../$(PRODUCT)-$(VERSION)/man 2> /dev/null \
+	    || cp -p $(srcdir)/$$file ../$(PRODUCT)-$(VERSION)/man; \
+	done
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

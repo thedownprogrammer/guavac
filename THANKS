@@ -1,0 +1,37 @@
+Guavac THANKS file
+
+Guavac was written by David Engberg for Effective Edge Technologies.
+The following people have contributed to Guavac by reporting problems,
+suggesting various improvements and submitting actual code.
+Help me keep this list complete and exempt of errors.
+
+Thomas Eirich			eir@zurich.ibm.com
+Carson Ellsworth		carson@elephant.parasoft.com
+Joerg Heitkoetter		joke@Germany.EU.net
+Jeffrey Hsu			hsu@cygnus.com
+Masayuki Ida			ida@csrl.aoyama.ac.jp
+Andy Johnson			andyj@osf.org
+Eric Raymond			esr@locke.ccil.org
+Tim Wilkinson			tim@sarc.city.ac.uk
+Per Bothner			bothner@cygnus.com
+Randy Chapman			chapman@cs.washington.edu
+Jim Tompson			jthompso@netcom.com
+Stig				stig@hackvan.com
+Paul Du Bois			dubois@geoworks.com
+Erik Troan			ewt@redhat.com
+Andrew Myers			andru@tonic.lcs.mit.edu
+Steve Byrne			sbb@ecomcon.sbay.org
+Peter Sestoft			sestoft@dina.kvl.dk
+Albrecht Kleine			kleine@ak.sax.de
+Daniel Collins			d.w.collins@ic.ac.uk
+Weiyu Tang			wtang@octavian.ics.uci.edu
+Shane Kerr			kerr@wizard.net
+Urban Widmark			ubbe@ts.umu.se
+Damian Ivereigh			damian@cisco.com
+??? Fisher			fisher@minster.cs.york.ac.uk
+Kip Macy			kmacy@purr.CS.Berkeley.EDU
+Mikael Ståldal			d96-mst@nada.kth.se
+
+Thanks as well to Susan Graham, teacher of CS264 and CS265 at UC Berkeley,
+which gave birth to guavac in the form of a final project.
+

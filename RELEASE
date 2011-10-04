@@ -1,0 +1,55 @@
+-------------------------------------------------------------------------------
+                           Announcing: guavac 1.0
+                     A free compiler for the Java language
+-------------------------------------------------------------------------------
+
+After twelve public beta releases, Effective Edge is proud to release version
+1.0 of the guavac compiler.  This includes many bug fixes over previous
+versions as well as support for JDK 1.1 inner classes.
+
+Guavac can be freely used and distributed under the terms of the Gnu Public
+License.  This is an early release and may be difficult for non-programmers
+to compile and use.
+
+All materials needed to compile a Netscape/Explorer compliant applet are
+included in the guavac distribution.  NO proprietary code from Sun is needed,
+so other tool writers should feel free to include guavac in their systems.
+
+Guavac was written in C++ to compile on any Unix system.  This has been
+tested under Solaris 2.x, SunOS 4.x, DEC OSF, Iris 5.3, HP/UX 9, and Linux 1.x 
+using gcc-2.7.2 and libg++-2.7.1 and binutils-2.6, but other operating systems
+should work without any major changes.
+*****************************************************************************
+* You absolutely need these, or later, versions, of gcc, libg++ and binutils *
+******************************************************************************
+
+A sparse little blurb about guavac can be found here:
+     http://http.cs.berkeley.edu/~engberg/guavac
+
+Guavac sources are available here:
+     ftp://summit.stanford.edu/pub/guavac
+
+Guavac sources are mirrored at these locations:
+     ftp://ftp.Germany.EU.net/pub/programming/languages/java/guavac
+     ftp://sunsite.mff.cuni.cz/Languages/Java/guavac
+     ftp://sunsite.auc.dk/pub/languages/java/guavac
+     ftp://ftp.unicamp.br/pub/languages/java/guavac
+
+A mailing list has been established at Effective Edge for guavac users and
+developers to exchange ideas and solutions.  To join the list, send mail to:
+     majordomo@eecs.com
+With this in the body (not the subject) of the message:
+     subscribe guavac
+
+We developed guavac with the intentions of including it with a large-
+scale network simulation environment, but have since decided not to
+commercialize guavac or any product based upon it.  We are now giving
+guavac away under the terms of the Gnu Public License in the hopes that
+other people may find it useful and contribute, in turn, to its future.
+
+For (non-exclusive) alternate licensing terms, Java-related consulting or
+support, or technology parterships, contact Effective Edge at:
+     info@eecs.com
+
+-------------------------------------------------------------------------------
+$Id: RELEASE,v 1.16 1997/11/10 00:46:52 geppetto Exp $

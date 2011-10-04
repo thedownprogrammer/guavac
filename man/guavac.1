@@ -1,0 +1,187 @@
+.\" $Id: guavac.1,v 1.1 1996/03/12 13:52:44 joke Rel $
+.so version.n
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.TH GUAVAC 1 "\*(UP\&" "Version \*(VE\&" "USER COMMANDS"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.\"     German umlauts
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.\"     usage: \*(ae\&
+.if t .ds ae ä
+.if n .ds ae ae
+.\"     usage: \*(oe\&
+.if t .ds oe ö
+.if n .ds oe oe
+.\"     usage: \*(ue\&
+.if t .ds ue ü
+.if n .ds ue ue
+.\"     usage: \*(Ae\&
+.if t .ds Ae Ä
+.if n .ds Ae Ae
+.\"     usage: \*(Oe\&
+.if t .ds Oe Ö
+.if n .ds Oe Oe
+.\"     usage: \*(Ue\&
+.if t .ds Ue Ü
+.if n .ds Ue Ue
+.\"     usage: \*(ss\&
+.if t .ds ss ß
+.if n .ds ss ss
+.\"     usage: \*(TM\&
+.if t .ds TM \(tm 
+.if n .ds TM \s-2(TM)\s+2
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.SH NAME
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+guavac \- a free Java compiler
+.LP
+guavad \- guavac's disassembler
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.SH SYNOPSIS
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.LP
+.B guavac
+[
+.B -version
+]
+[
+.B -classpath
+.I directory
+]
+[
+.B -d
+.I output-directory
+]
+[
+.B -M
+]
+.I filenames
+.LP
+.B guavad
+.I filename
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.SH DESCRIPTION
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.B Guavac
+is a compiler for the Java \*(TM\& programming language distributed under the
+.SM GNU GENERAL PUBLIC LICENSE.
+You should feel free to use, copy and modify it, based on the terms in the
+.SM COPYING
+file included in this distribution.
+We are distributing
+.B guavac
+free of charge in the hopes that other people will find it useful and
+possibly enhance its utility in turn.
+.PP
+All materials needed to compile a
+HotJava\*(TM\&
+or Netscape\*(TM\&
+compliant applet are included in the
+.B guavac
+distribution.  No proprietary code from Sun is needed,
+so other tool writers should feel free to include
+.B guavac
+in their systems.
+.PP
+.B Guavac
+is written in C++ to compile on any Unix system.  This has been
+tested under Solaris 2.x, SunOS 4.x, Iris 5.3, HP/UX 9, and Linux 1.x using
+.SM GNU's
+gcc-2.7.2, libg++-2.7.1 and binutils-2.6, but other operating systems
+should work without any major changes.
+.PP
+.B Guavac
+is not meant to be the definite
+.SM GNU Java
+compiler. There's a different project in the works at Cygnus, that aims
+at building a
+.SM GNU CC
+front-end for Java.
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.SH OPTIONS
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.B Guavac
+recognizes the following options.
+.TP
+.BI "-classpath " directory
+Set the
+.I directory.
+It maybe contains either the stub classes as distributed with
+.B guavac in the
+.I classes.zip
+file. Or, even better, the directory where the classes of
+Sun's Java Development Kit, or
+.SM JDK
+for short, reside.
+.TP
+.BI "-d " directory
+Set the output directory which otherwise defaults to the current
+working directory.
+.TP
+.BI "-M"
+Prints out dependencies for compiled files instead of compiling.
+.TP
+.BI "-version"
+Prints out the current version of guavac.
+.PP
+Refer to the
+.SM BUGS
+section below on philosophical implications of any collection of
+.SM OPTIONS.
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.SH ENVIRONMENT
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.B Guavac
+recognizes the
+.SM CLASSPATH
+environment variable, containing a colon separated list of
+directories where to look for compiled Java
+classes; much like the standard
+.SM PATH
+variable used to find executables.
+The setting of
+.SM CLASSPATH
+may be overriden with the
+.B -classpath
+option.
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.SH BUGS
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+At present, after 11 official releases,
+.B guavac
+\*(VE\& is relatively stable.
+However, incompatibilities arise between guavac and Sun's offerings, most of
+which are fixed shortly after discovery.
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.SH SEE ALSO
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.BR javac (1),
+.BR jdb (1),
+.BR kaffe (1)
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.SH AVAILABILITY
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.TP
+The \fBguavac\fP project's homepage is accessible via the World-Wide Web at:
+.I http://http.cs.berkeley.edu/~engberg/guavac/
+.TP
+.\"
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+.SH AUTHOR
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+Copyright 
+.if t \(co 
+.if n (c)
+1995, 1996 by David Engberg (geppetto@eecs.com).
+Manual page written and last upated in \*(UP\&
+by J\*(oe\&rg Heitk\*(oe\&tter (joke@Germany.EU.net).
+.\" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

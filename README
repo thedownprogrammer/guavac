@@ -1,0 +1,95 @@
+README file for guavac, version 1.0
+
+Guavac is a compiler for the Java language, written by Effective Edge
+Technologies and distributed under the Gnu Public License.  You should feel
+free to use, copy and modify it, based on the terms in the COPYING file
+included in this distribution.
+We are distributing guavac free of charge in the hopes that other people will
+find it useful and possibly enhance its utility in turn.
+
+Guavac should produce correct bytecode for valid Java input, but you may
+encounter some difficulties in compiling guavac itself, due inadequate
+tools on some platforms.
+
+Guavac is written in C++, so it requires a decent C++ compiler and a class
+library that implements the C++ libraries defined in the current C++
+standard.  To be more specific, guavac uses a few STL collection classes
+(like map and deque) as well as the standard string class which is used
+for Java's 16-bit (Unicode) strings.  This has only been tested using gcc
+(version 2.7.2) and libg++ (version 2.7.1), which seem to work out
+of the box on Linux, OSF, Irix and Solaris.
+     *********>>>>> Older versions of gcc will NOT work. <<<<<*********
+
+The C++ code used should be reasonably portable to an alternate C++ compiler
+that also supports the standard templates.  The only blatantly non-portable
+code that may require changing is in dynamic_cast.h.  Read the comments there
+for more information.
+
+
+============================= Installing guavac: =============================
+
+To install guavac, you can follow the standard Gnu compilation steps:
+
+   cd guavac-1.0
+   ./configure
+   make
+
+At this point, the binaries will be compiled in the source directory, and you
+can use them directly from there.  As an alternative, you can install the
+binaries into a central location using:
+
+   make install
+
+This will, by default, copy guavac and its associated files into directories
+off of /usr/local.  To install somewhere else, use the --prefix option with
+configure.  For example:
+
+   ./configure --prefix=/usr/gnu
+
+If you can't make compilation work, you could contact the guavac mailing
+list for assistance.  (see the RELEASE file for more information.)
+
+By default, this compiles with debugging on and optimization off.  If you want
+to try it the other way around, modify the CFLAGS in the top-level Makefile
+before you compile.  The current version of gcc has a bug that makes this
+fail in different ways on some platforms, so we can't currently promise that
+any set of flags other than '-g' will work.
+
+
+================================ Running guavac: ==============================
+
+Guavac looks for standard Java libraries in one of three places.  If you
+have installed the binaries using 'make install', then guavac will look for
+java interfaces in your current directory and in its own data directory.
+
+If you specify the CLASSPATH environment variable, it will search the
+colon-separated entries for the pre-compiled classes that it uses.  Each
+entry can be either a directory or a zip file of classes.
+If you have netscape or Sun's JDK on your machine, you can compile against
+their class archives like this (under csh):
+   setenv CLASSPATH .:/usr/local/netscape/java/classes/moz3_0.zip
+
+Once you have installed guavac, or have the CLASSPATH set, you can just invoke
+guavac with a Java file name:
+   guavac foo.java
+
+Alternately, you can use the -classpath compiler flag:
+   guavac -classpath .:/usr/local/netscape/java/classes/moz3_0.zip foo.java
+
+
+================================= Running guavad: ============================
+
+I've included a simple disassembler that is similar to Sun's 'javap -c', only
+offering an even lower-level view of the compiled class.  You can try this out
+by giving it a compiled .class file as an argument:
+   guavad Foo.class
+
+The output of the disassembler probably won't make any sense unless you have
+Sun's VM spec right next to you.  (Available somewhere at http://java.sun.com)
+
+
+Feel free to contact us with feedback of any sort.
+  Effective Edge
+  info@eecs.com
+
+$Id: README,v 1.19 1997/11/10 00:46:52 geppetto Exp $

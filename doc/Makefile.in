@@ -1,0 +1,92 @@
+# Makefile for Guavac's Texinfo documentation.
+
+# Autoconf for Guavac by Joerg Heitkoetter <joke@Germany.EU.net>, 1996.
+# $Id: Makefile.in,v 1.5 1996/03/12 21:25:28 joke Rel $
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+PRODUCT = @PRODUCT@
+VERSION = @VERSION@
+
+SHELL = /bin/sh
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+MAKEINFO = makeinfo
+TEXI2DVI = texi2dvi
+
+prefix = @prefix@
+infodir = @infodir@
+
+DISTFILES = Makefile.in $(PRODUCT).texinfo  $(PRODUCT).info* gpl.texinfo \
+	lgpl.texinfo texinfo.tex tex3patch stamp-vti version.texi
+
+# There's some annoying bug in Irix Makefiles that causes guavac.info to
+# be remade even when it is more recent than its dependancies.  Grrr....
+# all: $(PRODUCT).info
+all:
+
+info: $(PRODUCT).info
+
+$(PRODUCT).info: $(PRODUCT).texinfo version.texi
+	cd $(srcdir) && $(MAKEINFO) $<
+
+dvi: $(PRODUCT).dvi
+
+$(PRODUCT).dvi: $(PRODUCT).texinfo version.texi
+	$(TEXI2DVI) $<
+
+version.texi: stamp-vti
+stamp-vti: $(PRODUCT).texinfo ../configure.in
+	echo "@set EDITION $(VERSION)" > version.tmp
+	echo "@set UPDATED `date '+%B %Y'`" >> version.tmp
+	echo "@set VERSION $(VERSION)" >> version.tmp
+	if cmp -s version.tmp $(srcdir)/version.texi; then rm version.tmp; \
+	else mv version.tmp $(srcdir)/version.texi; fi
+	date > $@
+
+install: all
+	$(srcdir)/../mkinstalldirs $(infodir)
+	cd $(srcdir) && for file in $(PRODUCT).info*; do \
+	  $(INSTALL_DATA) $$file $(infodir)/$$file; \
+	done
+
+uninstall:
+	rm -f $(infodir)/$(PRODUCT).info*
+
+mostlyclean:
+	rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.ky *.log *.pg *.toc *.tp *.vr
+	rm -f *.tmp
+
+clean: mostlyclean
+
+distclean: clean
+	rm -f Makefile
+
+realclean: distclean
+	rm -f stamp-vti version.texi $(PRODUCT).info*
+
+dist: $(DISTFILES)
+	@echo "Copying distribution files"
+	@for file in $(DISTFILES); do \
+	  ln $(srcdir)/$$file ../$(PRODUCT)-$(VERSION)/doc 2> /dev/null \
+	    || cp -p $(srcdir)/$$file ../$(PRODUCT)-$(VERSION)/doc; \
+	done
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

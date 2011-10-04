@@ -1,0 +1,69 @@
+dnl Process this file with autoconf to produce a configure script.
+dnl
+dnl Autoconf for Guavac by Joerg Heitkoetter <joke@Germany.EU.net>, 1996.
+dnl $Id: configure.in,v 1.12 1997/11/10 00:46:52 geppetto Exp $
+dnl
+
+AC_INIT(common/CommonInstantiations.C)
+AC_CONFIG_HEADER(config.h)
+
+dnl Have to do this early in the file, because autoconf seems to insist
+dnl on -O2 early on unless you stop it.  gcc has a lot of problems with
+dnl templates and -O2 on many platforms.
+if test -z "${CFLAGS}"; then
+  CFLAGS=-g
+fi
+CFLAGS="$CFLAGS -I. -I.. -I\$(srcdir)/../common"
+AC_DEFINE_UNQUOTED(CFLAGS, "$CFLAGS")
+
+
+dnl checks for programs
+AC_AIX
+AC_ISC_POSIX
+AC_MINIX
+AC_REQUIRE_CPP
+AC_LANG_CPLUSPLUS
+AC_PROG_RANLIB
+AC_PROG_INSTALL
+AC_PROG_LN_S
+
+dnl Checks for libraries
+AC_CHECK_LIB(stdc++, main)
+AC_CHECK_LIB(m, main)
+
+dnl Checks for header files.
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_CHECK_HEADERS(unistd.h)
+
+dnl Checks for library functions.
+AC_FUNC_ALLOCA
+AC_CHECK_FUNCS(strtol)
+
+dnl Miscellaneous
+AC_PROG_MAKE_SET
+AC_C_BIGENDIAN
+
+PRODUCT=guavac
+VERSION=1.0
+AC_DEFINE_UNQUOTED(PRODUCT, "$PRODUCT")
+AC_SUBST(PRODUCT)
+AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
+AC_SUBST(VERSION)
+
+CXX=gcc
+AC_DEFINE_UNQUOTED(CXX, "$CXX")
+AC_SUBST(CXX)
+
+
+GNUFLAGS="-Wreturn-type -fenum-int-equiv"
+AC_DEFINE_UNQUOTED(GNUFLAGS, "$GNUFLAGS")
+AC_SUBST(GNUFLAGS)
+
+TEMPLATEFLAGS="-fno-implicit-templates"
+AC_DEFINE_UNQUOTED(TEMPLATEFLAGS, "$TEMPLATEFLAGS")
+AC_SUBST(TEMPLATEFLAGS)
+
+AC_OUTPUT(Makefile common/Makefile compiler/Makefile doc/Makefile \
+man/Makefile checks/Makefile, \
+[test -z "$CONFIG_HEADERS" || date > stamp-h])

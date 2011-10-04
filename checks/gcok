@@ -1,0 +1,51 @@
+#!/bin/sh
+# $Id: gcok,v 1.2 1996/03/11 10:39:24 joke Rel $
+#
+# set this to your systems parameters:
+guavac="0.1.4"
+jdk="/EUnet/research/java/jdk-1.0"
+path="/EUnet/research/java/jdk-1.0/lib"
+#
+tmp="/tmp/gcok.$$"
+find $jdk -name '*.java' -print >$tmp
+files="`cat $tmp`"
+total=`cat $tmp | wc -l | tr -d ' \011'`
+cores=0
+ok=0
+bugs=0
+#
+trap 'rm -f gcok.ok gcok.error $tmp; exit 1' 1 2 15
+rm -f gcok.ok gcok.error
+#
+for i in $files ; do
+  echo "gcok: checking: $i"
+  class=`echo $i | sed -e 's|\.java|\.class|' -e 's|^.*/||'`
+#
+  ( guavac -classpath $path $i ) > /dev/null 2> $tmp
+  if [ -r core ] ; then
+    cores=`expr $cores + 1`
+    rm -f core
+    echo "`basename $i` triggers core.***"
+  fi
+#
+  if [ -r $class ] ; then
+    echo "$i Ok." >> gcok.ok
+    ok=`expr $ok + 1`
+    echo "`basename $i` compiles ok.***"
+  else
+    echo "$i Error:" >> gcok.error
+    cat /tmp/gcok.$$ >> gcok.error
+    echo "***" >> gcok.error
+    bugs=`expr $bugs + 1`
+    echo "`basename $i` triggers compiler error.***"
+  fi
+  rm -f *.class
+done
+#
+echo "gcok: regression test for guavac version $guavac"
+echo "gcok: total $total in $jdk"
+echo "gcok: $ok compile ok. $bugs losers (with $cores core dumps)."
+#
+rm -f $tmp
+exit 0
+#

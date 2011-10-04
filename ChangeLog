@@ -1,0 +1,470 @@
+Sun Nov  9 16:28:37 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* Finished changes for 1.1 inner classes support.  Some parts are
+	left out for now since they break LALR pretty seriously, but these
+	can be integrated in the future.
+
+Sun Sep  7 15:37:18 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* common/FilePath.C, compiler/CompilerMain.C: OS/2 support from
+	Mikael Ståldal (d96-mst@nada.kth.se)
+
+Fri Jun 13 10:41:36 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* common/JavaTypeSignature.C: Make 'char' an ordinal type.
+	(Daniel Collins <d.w.collins@ic.ac.uk>)
+
+Thu May  8 09:19:44 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* common/JavaClassFile.C: Emit ACC_SUPER flag with classes.
+
+Wed May  7 15:12:46 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* common/JavaMethodInfo.C, etc.: Support for @deprecated tag.
+
+Mon Apr 28 11:25:51 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* Makefile.in: Removed dependency on 'install' -d flag, replaced it
+	with explicit mkdir call.  (Andrew Myers <andru@tonic.lcs.mit.edu>)
+
+	* configure.in: Patch for CFLAGS to make it easier to compile with
+	optimizations on.  (Erik Troan <ewt@redhat.com>)
+
+Tue Mar 25 17:13:05 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* common/FilePath.C (ListDirectoryContents): Fix to close directory.
+
+Wed Mar  5 21:38:46 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* doc/Makefile.in (stamp-vti): Fixed texinfo-clobbering bug.
+
+Mon Mar  3 09:08:14 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* Makefile.in: config changes from
+	Lars Raeder Clausen <elascurn@daimi.aau.dk>
+
+Sun Mar  2 10:43:04 1997  David Engberg  <geppetto@allegory.eecs.com>
+
+	* Makefile.in, etc:  Many changes to makefiles and configuration stuff.
+	Thanks to Stig (stig@hackvan.com)
+
+Mon Sep 23 10:08:18 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* common/FilePath.C: Changes to support NeXT
+
+Wed Aug 21 22:44:53 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* common/JavaCodeAttribute.C: Improve guavad output.
+
+Mon Aug  5 11:22:18 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* common/Makefile.in: Added VPATH entry.
+
+Fri Aug  2 19:53:52 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* Makefile.in: Change the name of 'disassemble' to 'guavad'
+
+Sat Jun 29 22:37:06 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Prevent overriding a method as more private.
+
+        * Release 0.2.3
+
+Sat Jun 29 13:54:49 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Added support for .zip files.
+
+Mon Jul 15 06:58:25 1996  Jim Thompson  <jct@ris2_u02>
+
+	* compiler/CompilerMain.C (main): Add check for -M argument; if
+	it's present, print to cout the name of each file "compiled" and
+	the list of dependencies for each, in a makefile-like list.  On
+	-M, don't generate the .class file.
+
+	* compiler/Compiler.C (CompileFile): Add dependencies argument so
+	CompileFile can pass back to caller the list of imported files
+	encountered during compiling.
+	(ImportOneClassPath): Add the name of each successfully-loaded
+	classFile to the list of dependencies.
+
+	* compiler/Compiler.h: add dependencies deque data member -- a
+	record of the names of all files imported in the course of
+	compiling.
+
+Thu Jun 13 12:29:29 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Fix for seg fault on bad source-file imports.
+
+Mon Jun  3 17:52:07 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Fix for bad field types.
+	Fix to catch classes in the wrong directory.
+
+Thu May 30 10:51:08 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* samples/Compiler.C: Report errors with invalid types in method
+	signatures.
+
+	* compiler/Statement.C: Fix so errors within a 'while' block are seen.
+
+Sat May 25 17:12:37 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* Release 0.2.2
+
+	* Rewrote installation to work correctly.
+
+Thu May 23 19:43:42 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Fix for importing the same class twice.
+	Added support for compiling a file against other source files which
+	haven't been compiled to .class files.
+
+Tue May 14 11:32:05 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Expression.C: Fix for (null instanceof X).
+	Fix for casting and instanceof interfaces.
+
+Mon May 13 14:42:31 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Fix for final string literal fields.
+
+Mon May  6 15:05:44 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Report an error for invalid flags to interface
+	method.
+	Mark interface methods as abstract.
+	Report an error for classes that are not abstract, but fail to
+	implement some abstract methods.
+
+Fri May  3 16:01:31 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* Release 0.2.1
+
+Wed May  1 18:32:17 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/CodeSequence.C: Fixed a major portability bug in code
+	generation going from iload -> iload_n, etc.
+
+Sun Apr 28 16:57:58 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Expression.C: Fix for static-field access through values.
+
+	* common/JavaClassFile.C: Fix for byte-order of longs on bigendian
+	systems.
+
+Fri Apr 26 12:02:30 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/BinaryExpression.C: Compatibility fix to handle string
+	concatenation with character arrays like javac does.
+
+	* compiler/parser.y: Added an error message for assigning array
+	initializer to non-array variable.
+
+	* common/JavaCodeAttribute.C: Fix to correctly print negative cases.
+
+	* compiler/Statement.C: Fix to handle negative case labels.
+
+Thu Apr 25 11:32:59 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* Release 0.2
+
+	* compiler/Compiler.C: Fix for casts from base-type arrays to Object.
+
+	* compiler/CodeSequence.C: Added a basic peephole optimizer.
+
+	* compiler/Statement.C: Fix for control flow through try blocks.
+	Fix to handle while(true){} and while(false){} as special cases.
+
+Wed Apr 24 10:27:26 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Statement.C: Eliminated some conditionally dead code.  For
+	example:  (false && x) --> false; (true || x) --> true;
+	(true ? x : y) --> x;  if (false) x else y; --> y;
+
+	* compiler/Compiler.C: Removed empty <clinit> functions.
+
+Sun Apr 21 15:07:26 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* common/JavaCodeAttribute.C: Added source line info to disassembly.
+
+	* compiler/CodeSequence.C: Rewrote code generation to use a more fluid
+	intermediate form.
+	Added line number information to compiler.
+
+Thu Apr 18 12:34:06 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Fix to allow multiple static initializer blocks.
+
+	* compiler/Expression.C: Added unary promotion from char to int.  This
+	violates section 3.5 of the draft specification I have, but it seems
+	to be required for compatibility.
+
+	* compiler/Expression.C: Fix for 'instanceof' parents.
+
+	* compiler/parser.y: Fix for empty statement in constructors.
+
+	* compiler/Statement.C: Fix for empty 'for' conditionals: for(;;);
+
+Wed Apr 17 12:42:46 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* Release 0.1.6
+
+	* common/JavaConstant.C: Fix for writing out 4-byte float constants.
+
+	* compiler/Statement.C: Fixed a bug in return/finally interaction.
+
+	* compiler/Expression.C: Rewrote code for handling field expressions
+	to support access to non-static fields through ancestor class names.
+
+	* compiler/Expression.C: Fix for negative long constant values.
+
+Sun Apr 14 11:34:45 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Expression.C: Fix for invalid arguments to a constructor.
+
+Sat Apr  6 09:54:59 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Expression.C: Fix for negative constant literal values.
+
+	* compiler/Statement.C: Fix for empty statements after labels.
+
+Thu Apr  4 15:30:38 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/BinaryExpression.C: Fix to correctly handle expressions
+	like this:  stringValue += 2;
+
+	* compiler/parser.y: Added an error for declaring a local variable that
+	is already declared in that scope.
+
+	* compiler/lexer.l: Fix to translate '\f' correctly.
+
+	* compiler/Compiler.C: Report an error for overriding a final method.
+	Report an error for overriding a method with a different return type.
+	Fix for a problem with imported class names not matching fully
+	qualified class names.
+
+Wed Apr  3 12:56:20 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Fix to automatically import all of your package.
+	Fix to correctly qualify interface names with their package.
+
+	* compiler/Statement.C: Fixed a bug with empty 'then' bodies in an
+	'if' statement:  if (...) then ; else { ... }
+
+Mon Apr  1 14:34:25 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Fix to allow method declarations in interfaces.
+	Fix to prevent generation of default constructor for interfaces.
+
+	* compiler/Expression.C: Fix to catch constant division by zero.
+
+Fri Mar 29 08:57:54 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* Release 0.1.5
+	* compiler/Expression.C: Checking use before set for local variables.
+
+	* compiler/Statement.C: Fix to allow chained case labels in 'switch.'
+	Fix to allow += to work with String.
+
+	* compiler/Compiler.C: Fix to allow casting of interfaces to
+	java.lang.Object
+
+	* Added reachability propogation to determine whether code is
+	reachable.
+
+Thu Mar 28 09:42:40 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Fix to remove false dependancies on Throwable.
+
+Mon Mar 25 13:24:41 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* common/JavaClassFile.C: Fix for loading long constants.
+
+	* compiler/lexer.l: Fix for long constants.
+
+Sun Mar 24 12:43:19 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Expression.C: Fix to allow ordinal character comparisons.
+
+	* common/JavaAccessFlags.C: Fixed the bytecode marking for 'abstract.'
+
+Sat Mar 23 18:37:47 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Statement.C: Fix to flag return values from void methods.
+
+Fri Mar 22 09:59:59 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/BinaryExpression.C: Optimized string concatenation with '+'
+	to remove a temporary for chains.  ("a" + "b" + "c")
+
+	* compiler/Expression.C: Fix to correctly report calls to non-existant
+	static method.
+
+	* compiler/Compiler.C: Fix to correctly compile constructors on
+	java.lang.Object.
+	Fix to correctly report an error for empty non-abstract, non-native
+	method bodies.
+
+Sat Mar 16 13:39:27 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/CompilerMain.C: Fix so if you compile a file in a different
+	directory, the output .class files will go into that directory.
+
+	* compiler/IntermediateClass.C: Added routine to find the name of the
+	class with the package information removed.
+
+	* compiler/parser.y: Fix to correctly handle constructors in packaged
+	classes.
+
+Thu Mar 14 15:47:21 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* common/JavaClassFile.C: Fixed bug in the bytecode representation of
+	'double.'  Using autoconf to check byte order.
+
+Wed Mar 13 10:27:49 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C: Fixed bug resulting in premature termination
+	from the loop that looks for better matches to an overloaded method.
+	(bug found by Joachim Laier)
+
+Fri Mar  8 09:40:16 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* Version 0.1.4 finished
+	* compiler/Expression.C: Modified newarray to generate code for byte[]
+	whenever the source asks for a boolean[] because JDK thinks that the
+	boolean marker is invalid, in violation of their own VM spec sec. 3.6
+
+Thu Mar  7 19:07:21 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* common/unicode_string.h: Replaced unicode_string typedef with an
+	equivalent subclassing which should reduce the symbol length of any
+	template instantiation over unicode_string.
+
+Mon Mar  4 15:57:51 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/Compiler.C, Expression.C, etc.  Added constant folding which
+	should allow correct handling of 'case' labels and final fields.  Fixed
+	many miscellaneous bugs in the process, possibly introduced others.
+
+Thu Feb 29 14:14:22 1996  David Engberg  <geppetto@allegory.eecs.com (David Engberg)>
+
+	* compiler/parser.y: Fixed typo in error message. (Eric Raymond)
+
+Sun Feb 18 15:34:52 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* compiler/Compiler.C: Fixed error reporting for constructors and
+	static initializers.
+
+	* compiler/Expression.C: Pass line number information to expressions
+	created during later passes.
+
+	* compiler/Expression.C, Compiler.C: Allow 'final' variable
+	initialization.
+
+Sat Feb 10 10:28:16 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* common/FilePath.C: Added <sys/types.h> for FreeBSD.  (Jeffrey Hsu)
+
+Wed Feb  7 09:31:17 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* Release 0.1.3
+
+	* compiler/Makefile: Went through and wrote out the compile statement
+	for every file that needs to be compiled because some brain-dead
+	platforms can't figure out standard rule formats.
+
+	* compiler/Expression.C, parser.y: Added support for multi-dimensioned
+	array allocation.  (e.g.  new int[6][5] )
+
+	* compiler/parser.y: Reports a more intelligent error when users have
+	constructors with return values.
+	Don't output code after finding a parse error.
+	
+	* compiler/Compiler.C: Delay loading imported package files until they
+	are used.
+	Changed CCompiler::PopLocalScope to fix SGI/libg++ problem.
+	
+Thu Feb  1 21:09:59 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* Added reference counting to CJavaMethodInfo
+
+Wed Jan 24 08:50:41 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* compiler/Compiler.C: fixed CCompiler::AssignableSubtype to correctly
+	identify array types as subtypes of Object.
+
+	* compiler/lexer.l: Added support for '"' character literal.
+	Added partial support for quoted Unicode characters in string and
+	character literals.
+
+	* compiler/parser.y: Added 'abstract' for class declarations.
+	Allowed for allocation expressions as statements.
+	Fixed order of array bounds and throw clause in method declaration.
+	Fixed cast to array types:  int i[] = (int[]) obj;
+	
+Tue Jan 23 10:58:44 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* compiler/Expression.C: Fixed stack size calculations for array
+	element assignment.
+
+	* Makefile: Fixed 'make clean' to enter and clean subdirectories.
+	(Thomas Eirich <eir@zurich.ibm.com>)
+	
+Sun Jan 21 18:12:35 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* compiler/Expression.C:  Fixed bug in (a ? b : c) expressions.
+	Fixed it so that super.foo() is implemented as a non-virtual call.
+
+Sat Jan 20 22:22:19 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* compiler/Expression.C: Added code so you could call static methods
+	on class instances.  This is a bad idea, imho, and not documented, but
+	the JDK demos rely on it.
+
+	* compiler/Statement.C: Fix to allow empty 'for' body:  for(a;b;c);
+
+	* compiler/Compiler.C: Changed order of field and method generation
+	so that classes in the same source file will be correctly qualified
+	when used within another class.
+
+	* compiler/parser.y: Changed assignment operators to right association.
+	Moved some things around so it could parse a[0].foo() correctly.
+	
+Wed Jan 17 20:56:59 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* compiler/Expression.C:
+	Fixed bug in casting from 32-bit integral type to a different 32-bit
+	integral type.
+	Fixed bug preventing comparison of character to another character
+	value.
+
+	* compiler/Expression.C: Added support for array pseudo-field 'length'
+
+	* compiler/CompilerInstantiations3.C: Initial revision
+
+Sun Jan 14 03:28:17 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* compiler/CompilerInstantiations2.C:
+	Added instantiations for buggy gcc platforms (0.1.1 release.)
+
+	* compiler/CompilerInstantiations.C:
+	Added instantiations for buggy gcc platforms. (0.1.1 release)
+
+Sat Jan 13 18:41:14 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+        Version 0.1.1 released.
+	* compiler/CompilerInstantiations.C: Added instantiations for other
+	platforms that have different instantiation behavior under gcc than
+	linux does.
+
+Thu Jan 11 10:42:27 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* Statement.C, Compiler.C: Replaced <limits.h> with C++ std <climits>
+
+Wed Jan 10 08:43:53 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* common/JavaClassFile.C: Added sys/types.h for Sun4  (Masayuki Ida)
+
+Wed Jan 9 10:23:12 1996  David Engberg  <geppetto@allegory.eecs.com>
+
+	* Reorganized the source tree to put code in subdirectories

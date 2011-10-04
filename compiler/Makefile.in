@@ -1,0 +1,168 @@
+# Makefile for Guavac's compiler and disassembler
+
+# Autoconf for Guavac by Joerg Heitkoetter <joke@Germany.EU.net>, 1996.
+# $Id: Makefile.in,v 1.17 1997/11/10 01:09:44 geppetto Exp $
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+PRODUCT = @PRODUCT@
+VERSION = @VERSION@
+
+SHELL = /bin/sh
+srcdir = @srcdir@
+VPATH = @srcdir@
+@SET_MAKE@
+
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+
+CCC = @CXX@
+CFLAGS = @CFLAGS@ -I$(srcdir)
+GNUFLAGS = @GNUFLAGS@
+TEMPLATEFLAGS = @TEMPLATEFLAGS@
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+COMPILELIBS = -L../common -lcommon $(LIBS)
+RANLIB = @RANLIB@
+LEX = flex
+YACC = bison
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+infodir = @infodir@
+datadir = @datadir@
+datasubdir = $(datadir)/guavac
+
+SUBDIRS = 
+
+DISTFILES = Makefile.in *.[hcCly] zextract.license.terms
+
+all: guavad guavac
+
+guavad: DisassembleMain.o ../common/libcommon.a
+	${CCC} ${CFLAGS} -o $@ DisassembleMain.o ${COMPILELIBS}
+
+COMPILEROBJS = CompilerInstantiations.o CompilerInstantiations2.o \
+	CompilerInstantiations3.o CompilerMain.o parser.o lexer.o Compiler.o \
+	Expression.o IntermediateClass.o IntermediateFunction.o \
+	VariableDeclaration.o Statement.o CompileError.o BinaryExpression.o \
+	CompileContext.o NonlocalBranch.o CodeSequence.o JavaDirectory.o \
+	LocalVariableRecord.o zextract.o
+
+guavac: ${COMPILEROBJS} ../common/libcommon.a
+	${CCC} ${CFLAGS} -o $@ ${COMPILEROBJS} ${COMPILELIBS}
+
+CompilerInstantiations.o: CompilerInstantiations.C
+	${CCC} ${CFLAGS} -c $<
+CompilerInstantiations2.o: CompilerInstantiations2.C
+	${CCC} ${CFLAGS} -c $<
+CompilerInstantiations3.o: CompilerInstantiations3.C
+	${CCC} ${CFLAGS} -c $<
+
+lexer.o: lexer.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+lexer.C: lexer.l
+	${LEX} lexer.l
+
+parser.o: parser.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+parser.C: parser.y
+	${YACC} -d parser.y -o parser.C
+	mv parser.C.h parser.h
+
+zextract.o: zextract.c
+	${CCC} ${CFLAGS} -c zextract.c
+
+DisassembleMain.o: DisassembleMain.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+CompilerMain.o: CompilerMain.C
+	${CCC} ${CFLAGS}  -DDEFAULT_CLASSPATH=\".:$(datasubdir)/classes.zip\" ${TEMPLATEFLAGS} -c $<
+Compiler.o: Compiler.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+BinaryExpression.o: BinaryExpression.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+Expression.o: Expression.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+IntermediateClass.o: IntermediateClass.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+IntermediateFunction.o: IntermediateFunction.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+VariableDeclaration.o: VariableDeclaration.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+Statement.o: Statement.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+CompileError.o: CompileError.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+FilterMain.o: FilterMain.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+CompileContext.o: CompileContext.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+NonlocalBranch.o: NonlocalBranch.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+CodeSequence.o: CodeSequence.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaDirectory.o: JavaDirectory.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+LocalVariableRecord.o: LocalVariableRecord.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+
+classfilter: FilterMain.o
+	${CCC} ${CFLAGS} FilterMain.o ${COMPILELIBS} -o classfilter
+
+install: all
+#	$(INSTALL) -d ${bindir}
+	if test ! -d ${bindir}; then mkdir ${bindir}; fi
+	$(INSTALL_PROGRAM) guavac ${bindir}
+	$(INSTALL_PROGRAM) guavad ${bindir}
+
+uninstall:
+	rm -f ${bindir}/guavac
+	rm -f ${bindir}/guavad
+
+mostlyclean:
+	rm -f *~
+	rm -f #*#
+	rm -f *.o
+	rm -f *.output
+
+clean: mostlyclean
+	rm -f guavac guavad classfilter
+
+distclean: clean
+	rm -f Makefile
+
+realclean: distclean
+	rm -f parser.C parser.h lexer.C
+
+DISTDIR=../$(PRODUCT)-$(VERSION)/compiler
+
+dist: $(DISTFILES) parser.C lexer.C
+	@echo "Copying distribution files"
+	@for file in $(DISTFILES); do \
+	  ln $(srcdir)/$$file $(DISTDIR) 2> /dev/null \
+	    || cp -p $(srcdir)/$$file $(DISTDIR); \
+	done
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

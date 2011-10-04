@@ -1,0 +1,20 @@
+List of needed and desired changes to guavac, in no particular order:
+
+The biggest thing that is needed is a more intelligent dependancy analysis.
+Right now, guavac works great if you are compiling one source file against
+any number of .class files, but it has serious problems with multiple
+uncompiled sources, especially when faced with circular dependancies.  This
+is a really hard problem, and all of my half-efforts to fix it have failed.
+
+Additional language changes required in the 1.1 inner classes doc.  These
+include variant forms of .new, .class, .this which all break LALR.  There is
+a bug filed on this with Javasoft, so they may fix the spec instead of guavac
+needing to implement the broken version.
+
+Traverse code after generation, verify stack sizes.
+
+Can only declare 'throws' for subclasses of parent's thrown classes.
+
+Expand error reporting to give more errors in a method after failure.  (hard)
+
+$Id: TODO,v 1.13 1997/11/10 00:46:52 geppetto Exp $

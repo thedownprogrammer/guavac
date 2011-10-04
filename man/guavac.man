@@ -1,0 +1,132 @@
+
+
+
+GUAVAC(1)                 USER COMMANDS                 GUAVAC(1)
+
+
+NNAAMMEE
+       guavac - a free Java compiler
+
+       guavad - guavac's disassembler
+
+SSYYNNOOPPSSIISS
+       gguuaavvaacc  [ --vveerrssiioonn ] [ --ccllaassssppaatthh _d_i_r_e_c_t_o_r_y ] [ --dd _o_u_t_p_u_t_-
+       _d_i_r_e_c_t_o_r_y ] [ --MM ] _f_i_l_e_n_a_m_e_s
+
+       gguuaavvaadd _f_i_l_e_n_a_m_e
+
+DDEESSCCRRIIPPTTIIOONN
+       GGuuaavvaacc is a compiler for the Java  (TM)  programming  lan-
+       guage  distributed  under  the GNU GENERAL PUBLIC LICENSE.
+       You should feel free to use, copy and modify it, based  on
+       the  terms  in the COPYING file included in this distribu-
+       tion.  We are distributing gguuaavvaacc free of  charge  in  the
+       hopes  that  other people will find it useful and possibly
+       enhance its utility in turn.
+
+       All  materials  needed  to  compile   a   HotJava(TM)   or
+       Netscape(TM)  compliant  applet are included in the gguuaavvaacc
+       distribution.  No proprietary code from Sun is needed,  so
+       other  tool  writers should feel free to include gguuaavvaacc in
+       their systems.
+
+       GGuuaavvaacc is written in C++ to compile on  any  Unix  system.
+       This  has  been  tested under Solaris 2.x, SunOS 4.x, Iris
+       5.3,  HP/UX  9,  and  Linux  1.x  using  GNU's  gcc-2.7.2,
+       libg++-2.7.1 and binutils-2.6, but other operating systems
+       should work without any major changes.
+
+       GGuuaavvaacc is not meant to be the definite GNU Java  compiler.
+       There's  a  different project in the works at Cygnus, that
+       aims at building a GNU CC front-end for Java.
+
+OOPPTTIIOONNSS
+       GGuuaavvaacc recognizes the following options.
+
+       --ccllaassssppaatthh _d_i_r_e_c_t_o_r_y
+              Set the _d_i_r_e_c_t_o_r_y_.  It maybe  contains  either  the
+              stub  classes  as  distributed  with  gguuaavvaacc iinn tthhee
+              _c_l_a_s_s_e_s_._z_i_p file. Or, even  better,  the  directory
+              where the classes of Sun's Java Development Kit, or
+              JDK for short, reside.
+
+       --dd _d_i_r_e_c_t_o_r_y
+              Set the output directory which  otherwise  defaults
+              to the current working directory.
+
+       --MM     Prints  out dependencies for compiled files instead
+              of compiling.
+
+
+
+
+
+Version 0.2.5              August 1996                          1
+
+
+
+
+
+GUAVAC(1)                 USER COMMANDS                 GUAVAC(1)
+
+
+       --vveerrssiioonn
+              Prints out the current version of guavac.
+
+       Refer to the BUGS section below on philosophical  implica-
+       tions of any collection of OPTIONS.
+
+EENNVVIIRROONNMMEENNTT
+       GGuuaavvaacc recognizes the CLASSPATH environment variable, con-
+       taining a colon separated list  of  directories  where  to
+       look  for  compiled  Java  classes; much like the standard
+       PATH variable used to find executables.   The  setting  of
+       CLASSPATH may be overriden with the --ccllaassssppaatthh option.
+
+BBUUGGSS
+       At  present,  after  11 official releases, gguuaavvaacc 0.2.5 is
+       relatively  stable.   However,   incompatibilities   arise
+       between  guavac  and  Sun's  offerings,  most of which are
+       fixed shortly after discovery.
+
+SSEEEE AALLSSOO
+       jjaavvaacc(1), jjddbb(1), kkaaffffee(1)
+
+AAVVAAIILLAABBIILLIITTYY
+       The gguuaavvaacc project's homepage is accessible  via  the
+              World-Wide Web at:
+              _h_t_t_p_:_/_/_h_t_t_p_._c_s_._b_e_r_k_e_l_e_y_._e_d_u_/_~_e_n_g_b_e_r_g_/_g_u_a_v_a_c_/
+
+
+       AAUUTTHHOORR Copyright (c) 1995, 1996  by  David  Engberg  (gep-
+              petto@eecs.com).   Manual  page  written  and  last
+              upated  in  August  1996   by   Joerg   Heitkoetter
+              (joke@Germany.EU.net).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Version 0.2.5              August 1996                          2
+
+

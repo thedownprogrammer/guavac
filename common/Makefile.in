@@ -1,0 +1,132 @@
+# Makefile for Guavac's common library
+
+# Autoconf for Guavac by Joerg Heitkoetter <joke@Germany.EU.net>, 1996.
+# $Id: Makefile.in,v 1.6 1997/03/03 18:19:30 geppetto Exp geppetto $
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+PRODUCT = @PRODUCT@
+VERSION = @VERSION@
+
+SHELL = /bin/sh
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+
+CCC = @CXX@
+CFLAGS = @CFLAGS@ -I$(srcdir)
+GNUFLAGS = @GNUFLAGS@
+TEMPLATEFLAGS = @TEMPLATEFLAGS@
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+RANLIB = @RANLIB@
+LEX = @LEX@
+YACC = @YACC@
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+infodir = @infodir@
+
+SUBDIRS = 
+
+DISTFILES = Makefile.in *.[hC]
+
+COMMONOBJS = CommonInstantiations.o JavaAttribute.o JavaClassFile.o \
+	JavaConstant.o JavaFieldInfo.o JavaMethodInfo.o unicode_string.o \
+	JavaFieldSignature.o JavaTypeSignature.o JavaMethodSignature.o \
+	JavaAccessFlags.o JavaCodeAttribute.o FilePath.o \
+	UnicodeInstantiations.o	JavaExceptionsTable.o CommandLine.o Bitset.o \
+	InnerClassesTable.o
+
+all: libcommon.a
+
+libcommon.a: ${COMMONOBJS}
+	ar rc $@ ${COMMONOBJS}
+	if [ "$(RANLIB)" ] ; then \
+	  $(RANLIB) $@ ; \
+	fi
+
+CommonInstantiations.o: CommonInstantiations.C
+	${CCC} ${CFLAGS} -c $<
+UnicodeInstantiations.o: UnicodeInstantiations.C
+	${CCC} ${CFLAGS} -c $<
+JavaAttribute.o: JavaAttribute.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaClassFile.o: JavaClassFile.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaConstant.o : JavaConstant.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaFieldInfo.o: JavaFieldInfo.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaMethodInfo.o: JavaMethodInfo.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+unicode_string.o: unicode_string.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaFieldSignature.o: JavaFieldSignature.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaTypeSignature.o: JavaTypeSignature.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaMethodSignature.o: JavaMethodSignature.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaAccessFlags.o: JavaAccessFlags.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaCodeAttribute.o: JavaCodeAttribute.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+InnerClassesTable.o: InnerClassesTable.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+FilePath.o: FilePath.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+JavaExceptionsTable.o: JavaExceptionsTable.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+CommandLine.o: CommandLine.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+Bitset.o: Bitset.C
+	${CCC} ${CFLAGS} ${TEMPLATEFLAGS} -c $<
+
+install: all
+
+uninstall:
+
+mostlyclean:
+	rm -f *.o *~ #*#
+
+clean: mostlyclean
+	rm -f *.a
+
+distclean: clean
+	rm -f Makefile
+
+DISTDIR=../$(PRODUCT)-$(VERSION)/common
+
+dist: $(DISTFILES)
+	@echo "Copying distribution files"
+	@for file in $(DISTFILES); do \
+	ln $(srcdir)/$$file $(DISTDIR) 2> /dev/null \
+	  || cp -p $(srcdir)/$$file $(DISTDIR); \
+	done
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

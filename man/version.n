@@ -1,0 +1,3 @@
+.ds ED 0.2.5
+.ds UP August 1996
+.ds VE 0.2.5

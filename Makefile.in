@@ -1,0 +1,169 @@
+# Top-level Makefile
+
+# Autoconf for Guavac by Joerg Heitkoetter <joke@Germany.EU.net>, 1996.
+# $Id: Makefile.in,v 1.11 1997/04/28 23:13:26 geppetto Exp $
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+PRODUCT = @PRODUCT@
+VERSION = @VERSION@
+
+SHELL = /bin/sh
+srcdir = @srcdir@
+VPATH = @srcdir@
+@SET_MAKE@
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+infodir = @infodir@
+mandir = @mandir@
+datadir = @datadir@
+datasubdir = $(datadir)/guavac
+
+CCC = @CXX@
+CFLAGS = @CFLAGS@
+GNUFLAGS = @GNUFLAGS@
+TEMPLATEFLAGS = @TEMPLATEFLAGS@
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+RANLIB = @RANLIB@
+LN_S = @LN_S@
+AR = ar
+
+
+# MDEFINES = CCC='$(CCC)' CFLAGS='$(CFLAGS) $(GNUFLAGS)' \
+#   TEMPLATEFLAGS='$(TEMPLATEFLAGS)' LDFLAGS='$(LDFLAGS)' LIBS='$(LIBS)' \
+#   prefix='$(prefix)' exec_prefix='$(exec_prefix)' \
+#   bindir='$(bindir)' infodir='$(infodir)' mandir='$(mandir)'
+
+SUBDIRS = common compiler man doc checks
+
+DISTFILES = README NEWS TODO THANKS COPYING RELEASE ChangeLog \
+	configure.in mkinstalldirs install-sh Makefile.in \
+	config.h.in configure acconfig.h
+
+all:
+	for subdir in $(SUBDIRS); do \
+	  echo making $@ in $$subdir; \
+	  (cd $$subdir && $(MAKE) $(MDEFINES) $@) || exit 1; \
+	done
+
+install: all
+	for subdir in $(SUBDIRS); do \
+	  echo making $@ in $$subdir; \
+	  (cd $$subdir && $(MAKE) $(MDEFINES) $@) || exit 1; \
+	done
+	if test ! -d ${datadir}; then mkdir ${datadir}; fi
+	if test ! -d ${datasubdir}; then mkdir ${datasubdir}; fi
+#	$(INSTALL) -d $(datadir)
+#	$(INSTALL) -d $(datasubdir)
+	rm -rf $(datasubdir)/classes.zip
+	$(INSTALL_DATA) $(srcdir)/classes.zip $(datasubdir)/classes.zip
+
+uninstall:
+	for subdir in $(SUBDIRS); do \
+	  echo making $@ in $$subdir; \
+	  (cd $$subdir && $(MAKE) $(MDEFINES) $@) || exit 1; \
+	done
+	rm -rf $(datasubdir)
+
+manpage:
+	cd man && $(MAKE) $@
+
+info dvi:
+	cd doc && $(MAKE) $@
+
+check: all
+	cd checks && $(MAKE) $@
+
+mostlyclean: mostlyclean-recursive mostlyclean-local
+
+clean: clean-recursive clean-local
+
+distclean: distclean-recursive distclean-local
+
+mostlyclean-recursive clean-recursive distclean-recursive realclean-recursive:
+	for subdir in $(SUBDIRS); do \
+ 	  target=`echo $@ | sed 's/-recursive//'`; \
+	  echo making $$target in $$subdir; \
+	  (cd $$subdir && $(MAKE) $$target) || exit 1; \
+	done
+
+mostlyclean-local:
+	rm -f *~ #*# *.tar.gz
+
+clean-local: mostlyclean-local
+	rm -f guavac
+	rm -f guavad
+
+distclean-local: clean-local
+	rm -f Makefile
+	rm -f config.cache
+	rm -f config.h
+	rm -f config.log
+	rm -f config.status
+	rm -f stamp-h
+
+dist: $(DISTFILES)
+	rm -rf $(PRODUCT)-$(VERSION)
+	mkdir $(PRODUCT)-$(VERSION)
+	chmod 777 $(PRODUCT)-$(VERSION)
+	@echo "Copying distribution files"
+	@for file in $(DISTFILES); do \
+	  ln $(srcdir)/$$file $(PRODUCT)-$(VERSION) 2> /dev/null \
+	    || cp -p $(srcdir)/$$file $(PRODUCT)-$(VERSION); \
+	done
+	ln classes.zip $(PRODUCT)-$(VERSION) 2> /dev/null \
+	    || cp -p classes.zip $(PRODUCT)-$(VERSION);
+	for subdir in $(SUBDIRS); do \
+	  childdir=`pwd`/"$(PRODUCT)-$(VERSION)/$$subdir"; \
+	  echo making $@ in $$subdir; \
+	  mkdir $$childdir; \
+	  chmod 777 $$childdir; \
+	  (cd $$subdir && $(MAKE) DISTDIR=$$childdir $@) || exit 1; \
+	done
+	chmod -R a+r $(PRODUCT)-$(VERSION)
+	tar chf - $(PRODUCT)-$(VERSION) | gzip -9c > $(PRODUCT)-$(VERSION).tar.gz
+	rm -rf $(PRODUCT)-$(VERSION)
+
+bindist: $(DISTFILES) all
+	rm -rf $(PRODUCT)-$(VERSION)
+	mkdir $(PRODUCT)-$(VERSION)
+	chmod 777 $(PRODUCT)-$(VERSION)
+	@echo "Copying distribution files"
+	@for file in $(DISTFILES); do \
+	  ln $(srcdir)/$$file $(PRODUCT)-$(VERSION) 2> /dev/null \
+	    || cp -p $(srcdir)/$$file $(PRODUCT)-$(VERSION); \
+	done
+	ln classes.zip $(PRODUCT)-$(VERSION) 2> /dev/null \
+	    || cp -p classes.zip $(PRODUCT)-$(VERSION);
+	for subdir in $(SUBDIRS); do \
+	  childdir=`pwd`/"$(PRODUCT)-$(VERSION)/$$subdir"; \
+	  echo making $@ in $$subdir; \
+	  mkdir $$childdir; \
+	  chmod 777 $$childdir; \
+	  (cd $$subdir && $(MAKE) DISTDIR=$$childdir $@) || exit 1; \
+	done
+	chmod -R a+r $(PRODUCT)-$(VERSION)
+	tar chzf $(PRODUCT)-$(VERSION).tar.gz $(PRODUCT)-$(VERSION)
+	rm -rf $(PRODUCT)-$(VERSION)
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:
